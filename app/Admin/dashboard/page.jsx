@@ -1,7 +1,7 @@
 "use client"
 import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-
+import Link from "next/link";
 
 export default function AdminDashboard() {
   const { data: session } = useSession();
@@ -42,7 +42,7 @@ export default function AdminDashboard() {
             <h2 className="text-xl font-semibold mb-4">User Management</h2>
             <p>View and manage user registrations and bookings.</p>
             <div className="text-right mt-2">
-              <a href="#" className="text-blue-500 hover:text-blue-700">View Users</a>
+              <Link href="/Admin/usermanagement" className="text-blue-500 hover:text-blue-700">View Users</Link>
             </div>
           </div>
 
