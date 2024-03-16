@@ -1,7 +1,11 @@
 "use client"
 import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+
 import Link from "next/link";
+
+import Link from 'next/link';
+
 
 export default function AdminDashboard() {
   const { data: session } = useSession();
@@ -58,6 +62,17 @@ export default function AdminDashboard() {
               <a href="#" className="text-blue-500 hover:text-blue-700">More Insights</a>
             </div>
           </div>
+
+          {/* Instructor */}        
+          <div className="bg-white rounded-lg shadow p-4">
+            <h2 className="text-xl font-semibold mb-4">Instructor</h2>
+            <p>View and manage Instructors</p>
+            <div className="text-right mt-2">
+              <Link href="/Admin/Instructor" className="text-blue-500 hover:text-blue-700">View</Link>
+            </div>
+          </div>
+          
+          
 
           
         </div>
