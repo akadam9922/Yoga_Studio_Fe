@@ -154,6 +154,7 @@ class UserManagement extends Component {
           <p className="text-gray-600">Manage ongoing classes and view class details.</p>
         </div>
 
+
         {selectedClass && (
           <div className='selected-class-details'>
             <h2 className="text-xl font-semibold mb-2">{selectedClass.name} Details</h2>
