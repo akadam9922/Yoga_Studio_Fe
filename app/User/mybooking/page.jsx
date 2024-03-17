@@ -69,7 +69,7 @@ const BookingListPage = () => {
                         Level Type
                      </th>
                      <th scope="col" className="text-center px-6 py-3">
-                        Start Date
+                        Start Time
                      </th>
                      <th scope="col" className="text-center px-6 py-3">
                         Price
