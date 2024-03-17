@@ -61,7 +61,7 @@ const SchedulePage = () => {
 
 
     const handleBack = () => {
-        router.push('/Admin/Clientmanagement');
+        router.push('/Admin/Schedule');
     };
 
 

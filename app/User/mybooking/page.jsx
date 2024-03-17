@@ -1,20 +1,22 @@
 "use client";
-import { useRouter } from 'next/navigation';
+import { useRouter,useParams } from 'next/navigation';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const BookingListPage = () => {
 
+const BookingListPage = () => {
+   const params = useParams();
    const router = useRouter();
    const [booking, setBooking] = useState([]);
 
-   useEffect(() => {
-      getData();
-   }, []);
+
+    useEffect(() => {
+        getData();
+    }, []);
 
 
    const handleBack = () => {
-      router.back();
+      router.push('/User/mybooking');
    };
 
 
@@ -22,6 +24,7 @@ const BookingListPage = () => {
       confirm("Are you sure you want to delete this booking?") && axios.delete('http://localhost:8080/booking/deletebooking/' + id)
          .then(response => {
             if (response.status == 204) {
+               console.log(response.data)
                getData();
             }
 
@@ -32,7 +35,7 @@ const BookingListPage = () => {
 
    }
    function getData() {
-      axios.get('http://localhost:8080/booking/getbookingdetails')
+      axios.get('http://localhost:8080/booking/getbookingdetails/' + params.id)
          .then(response => {
             console.log(response.data);
             setBooking(response.data);
@@ -69,7 +72,7 @@ const BookingListPage = () => {
                         Level Type
                      </th>
                      <th scope="col" className="text-center px-6 py-3">
-                        Start Time
+                        Start Date
                      </th>
                      <th scope="col" className="text-center px-6 py-3">
                         Price
@@ -95,7 +98,7 @@ const BookingListPage = () => {
                            {booking.level || 'NA'}
                         </td>
                         <td className="text-center px-6 py-4">
-                           {booking.startTime || 'NA'}
+                           {booking.startDate || 'NA'}
                         </td>
                         <td className="text-center px-6 py-4">
                            £{booking.amount || '0'}
