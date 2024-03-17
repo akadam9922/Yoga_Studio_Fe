@@ -9,14 +9,13 @@ const BookingListPage = () => {
    const router = useRouter();
    const [booking, setBooking] = useState([]);
 
+   useEffect(() => {
+      if (id) {
+          getData(id); // Pass the id value to the getData function
+      }
+  }, [id]);
 
-
-   
-    useEffect(() => {
-        getData();
-    }, []);
-
-
+  
    const handleBack = () => {
       router.push('/User/mybooking');
    };
