@@ -1,134 +1,127 @@
 "use client";
-import React, { Component } from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-class BookingList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      bookings: [],
-    };
-  }
+const BookingListPage = () => {
 
-  componentDidMount() {
-    this.fetchBookings();
-  }
+   const router = useRouter();
+   const [booking, setBooking] = useState([]);
 
-  fetchBookings = async () => {
-    try {
-      const response = await axios.get('http://localhost:8080/booking/getallbooking');
-      this.setState({ bookings: response.data });
-    } catch (error) {
-      console.error('Error fetching bookings:', error);
-    }
-  };
+   useEffect(() => {
+      getData();
+   }, []);
 
-  render() {
-    const { bookings } = this.state;
 
-    return (
+   const handleBack = () => {
+      router.back();
+   };
+
+
+   function handleDelete(id) {
+      confirm("Are you sure you want to delete this booking?") && axios.delete('http://localhost:8080/booking/deletebooking/' + id)
+         .then(response => {
+            if (response.status == 204) {
+               getData();
+            }
+
+         })
+         .catch(error => {
+            console.error('Error:', error);
+         });
+
+   }
+   function getData() {
+      axios.get('http://localhost:8080/booking/getbookingdetails')
+         .then(response => {
+            console.log(response.data);
+            setBooking(response.data);
+         })
+         .catch(error => {
+            console.error('Error fetching booking data:', error);
+            setBooking([]);
+         });
+
+   }
+
+
+
+
+   return (
       <div className="booking-list">
-        <h1 className='text-center text-4xl text-gray-900 font-extralight dark:text-white'>Users Bookings List</h1>
-       <br></br><br></br>
-
-  <ul className="grid gap-4 max-w-md mx-auto">
-   <li className="pb-3 sm:pb-4">
-      <div className="flex items-center space-x-4 rtl:space-x-reverse">
-         <div className="flex-shrink-0">
-            <img className="w-8 h-8 rounded-full" src="./images/profile.png" alt="profile image"/>
+         <div className="self-start mb-4 cursor-pointer span">
+            <span onClick={() => handleBack()} className="text-base text-blue-500 hover:text-blue-700">
+               ← Back
+            </span>
          </div>
-         <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-               Freddie
-            </p>
-            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-               email@flowbite.com
-            </p>
-         </div>
-         <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            $320
-         </div>
-      </div>
-   </li>
-   <li className="py-3 sm:py-4">
-      <div className="flex items-center space-x-4 rtl:space-x-reverse">
-         <div className="flex-shrink-0">
-            <img className="w-8 h-8 rounded-full" src="/User/mybooking/images/profile.png" alt="profile image"/>
-         </div>
-         <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-               Bonnie Green
-            </p>
-            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-               email@flowbite.com
-            </p>
-         </div>
-         <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            $3467
-         </div>
-      </div>
-   </li>
-   <li className="py-3 sm:py-4">
-      <div className="flex items-center space-x-4 rtl:space-x-reverse">
-         <div className="flex-shrink-0">
-            <img className="w-8 h-8 rounded-full" src="/User/mybooking/images/profile.png" alt="profile image"/>
-         </div>
-         <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-               Michael Gough
-            </p>
-            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-               email@flowbite.com
-            </p>
-         </div>
-         <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            $67
-         </div>
-      </div>
-   </li>
-   <li className="py-3 sm:py-4">
-      <div className="flex items-center space-x-4 rtl:space-x-reverse">
-         <div className="flex-shrink-0">
-            <img className="w-8 h-8 rounded-full" src="/User/mybooking/images/profile.png" alt="profile image"/>
-         </div>
-         <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-               Thomas Lean
-            </p>
-            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-               email@flowbite.com
-            </p>
-         </div>
-         <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            $2367
-         </div>
-      </div>
-   </li>
-   <li className="pt-3 pb-0 sm:pt-4">
-      <div className="flex items-center space-x-4 rtl:space-x-reverse">
-         <div className="flex-shrink-0">
-            <img className="w-8 h-8 rounded-full" src="./images/profile.png" alt="profile image"/>
-         </div>
-         <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-               Lana Byrd
-            </p>
-            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-               email@flowbite.com
-            </p>
-         </div>
-              <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            $367
-         </div>
-      </div>
-   </li>
-</ul>
+         <h1 className='text-center text-4xl text-gray-900 font-extralight dark:text-white'>Users Bookings List</h1>
+         <br></br><br></br>
 
 
-       
-      </div>
-    );
-  }
-}
+         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                     <th scope="col" className="text-center px-6 py-3">
+                        Type Of Session
+                     </th>
+                     <th scope="col" className="text-center px-6 py-3">
+                        Level Type
+                     </th>
+                     <th scope="col" className="text-center px-6 py-3">
+                        Start Date
+                     </th>
+                     <th scope="col" className="text-center px-6 py-3">
+                        Price
+                     </th>
+                     <th scope="col" className="text-center px-6 py-3">
+                        Instructor
+                     </th>
+                     <th scope="col" className="text-center px-6 py-3">
+                        Duration
+                     </th>
+                     <th scope="col" className="text-center px-6 py-3">
+                        <span className="sr-only">Delete</span>
+                     </th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {booking && booking.map((booking, index) => (
+                     <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td className="text-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                           {booking.categoryType || 'NA'}
+                        </td>
+                        <td className="text-center px-6 py-4">
+                           {booking.level || 'NA'}
+                        </td>
+                        <td className="text-center px-6 py-4">
+                           {booking.startTime || 'NA'}
+                        </td>
+                        <td className="text-center px-6 py-4">
+                           £{booking.amount || '0'}
+                        </td>
+                        <td className="text-center px-6 py-4">
+                           {booking.instructorName || 'NA'}
+                        </td>
+                        <td className="text-center px-6 py-4">
+                           {booking.duration || 'NA'}
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                           <button onClick={() => { handleDelete(index) }} className="font-medium text-red-600 dark:text-blue-500 hover:underline">
+                              Delete
+                           </button>
+                        </td>
+                     </tr>
+                  ))}
+               </tbody>
+            </table>
+         </div>
 
-export default BookingList;
+
+
+      </div>
+   );
+};
+
+
+export default BookingListPage;
