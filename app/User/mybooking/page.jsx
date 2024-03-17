@@ -16,7 +16,7 @@ class BookingList extends Component {
 
   fetchBookings = async () => {
     try {
-      const response = await axios.get('/booking/getallbooking');
+      const response = await axios.get('http://localhost:8080/booking/getallbooking');
       this.setState({ bookings: response.data });
     } catch (error) {
       console.error('Error fetching bookings:', error);
