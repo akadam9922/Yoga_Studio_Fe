@@ -1,5 +1,5 @@
 "use client";
-import { useRouter,useParams } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -10,12 +10,10 @@ const BookingListPage = () => {
    const [booking, setBooking] = useState([]);
 
    useEffect(() => {
-      if (id) {
-          getData(id); // Pass the id value to the getData function
-      }
-  }, [id]);
+      getData(); // Pass the id value to the getData function
+   }, []);
 
-  
+
    const handleBack = () => {
       router.push('/User/mybooking');
    };
@@ -36,7 +34,7 @@ const BookingListPage = () => {
 
    }
    function getData() {
-      axios.get('http://localhost:8080/booking/getbookingdetails/' + params.id)
+      axios.get('http://localhost:8080/booking/getbookingdetails/' + 2)
          .then(response => {
             console.log(response.data);
             setBooking(response.data);

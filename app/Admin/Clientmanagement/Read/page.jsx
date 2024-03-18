@@ -19,7 +19,7 @@ const ClientmanagementPage = () => {
   };
 
   function updateImgUrls(data) {
-    return data.map((elem, index) => {
+    return data.map((elem) => {
       return {
         ...elem,
         imageUrl: "https://source.unsplash.com/800x900/?yogateacher"
